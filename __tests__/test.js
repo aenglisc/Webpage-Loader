@@ -17,7 +17,7 @@ test('download file', () => {
   const dir = genFolder();
 
   expect.assertions(1);
-  return webpageLoader(localhost, dir)
-    .then(() => fs.readFile(path.join(dir, 'localhost.html'), 'utf8'))
+  return webpageLoader(localhost, osTempDir)
+    .then(() => fs.readFile(path.join(osTempDir, 'localhost.html'), 'utf8'))
     .then(data => expect(data.toString()).toBe('Hello world!'));
 });
