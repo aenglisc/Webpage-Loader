@@ -1,27 +1,10 @@
 import fs from 'mz/fs';
 import path from 'path';
-// import cheerio from 'cheerio';
 import axios from './axios';
 import { makePageName, makeSrcDirName } from './makeName';
-
-/*
-const srcTypes = {
-  link: 'href',
-  img: 'src',
-  script: 'src',
-};
-*/
-
-// const getSrc = ()
-
+import parsePage from './parsePage';
 
 const mkdir = (exists, destination) => (exists ? undefined : fs.mkdir(destination));
-/*
-const makePath = (address, destination) => {
-  const outputPath = path.resolve(destination);
-  return path.join(outputPath, `${makePageName(address)}`);
-};
-*/
 
 export default (address, destination = './tmp') => {
   const pageName = makePageName(address);
