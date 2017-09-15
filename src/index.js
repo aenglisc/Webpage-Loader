@@ -2,7 +2,7 @@ import fs from 'mz/fs';
 import path from 'path';
 import axios from './axios';
 import { makePageName, makeSrcDirName } from './makeName';
-import parsePage from './parsePage';
+// import parsePage from './parsePage';
 
 const mkdir = (exists, destination) => (exists ? undefined : fs.mkdir(destination));
 
