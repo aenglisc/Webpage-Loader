@@ -4,7 +4,7 @@
   "description": "An asynchronous page downloading utlity",
   "main": "dist/index.js",
   "bin": {
-    "webpage-loader-by-roman": "dist/bin/loader.js"
+    "webpage-loader-by-roman": "dist/bin/app.js"
   },
   "scripts": {
     "test": "jest",
@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
+    "cheerio": "^1.0.0-rc.2",
     "commander": "^2.11.0",
     "mz": "^2.6.0",
     "nock": "^9.0.14"
