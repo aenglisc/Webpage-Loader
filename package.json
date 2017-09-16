@@ -7,7 +7,7 @@
     "webpage-loader-by-roman": "dist/bin/app.js"
   },
   "scripts": {
-    "test": "DEBUG='page-loader:*' jest --coverage",
+    "test": "DEBUG='page-loader' jest --coverage",
     "babel-node": "babel-node",
     "eslint": "eslint",
     "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
