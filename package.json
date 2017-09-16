@@ -1,6 +1,6 @@
 {
   "name": "webpage-loader-by-roman",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "An asynchronous page downloading utlity",
   "main": "dist/index.js",
   "bin": {
@@ -44,5 +44,16 @@
     "commander": "^2.11.0",
     "mz": "^2.6.0",
     "nock": "^9.0.14"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "/node_modules/",
+      "/__fixtures__/"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/testPage_files/"
+    ],
+    "testPathIgnorePatterns": ["/__fixtures__/"]
   }
 }
