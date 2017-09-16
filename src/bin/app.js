@@ -8,8 +8,7 @@ program
   .description(packageData.description)
   .option('-o, --output <path>', 'input directory for saving')
   .arguments('<url>')
-  .action(url => run(url, program.output)
-    .catch(e => console.log(e)))
+  .action(url => run(url, program.output))
   .parse(process.argv);
 
 if (!program.args.length) {
