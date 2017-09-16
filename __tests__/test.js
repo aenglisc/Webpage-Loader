@@ -6,10 +6,10 @@ import webpageLoader from '../';
 
 const localhost = 'http://localhost';
 const fixturesDir = './__tests__/__fixtures__/';
-const gentmpdir = () => fs.mkdtempSync(os.tmpdir());
+// const gentmpdir = () => os.tmpdir();
 
 test('download test page', () => {
-  const tmpdir = gentmpdir();
+  const tmpdir = os.tmpdir();
 
   const html = fs.readFileSync(`${fixturesDir}base/test.html`, 'utf8');
   const icon = fs.readFileSync(`${fixturesDir}base/icon.ico`);
