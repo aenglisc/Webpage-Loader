@@ -45,19 +45,21 @@
     "debug": "^3.0.1",
     "mkdirp": "^0.5.1",
     "mz": "^2.6.0",
-    "nock": "^9.0.14"
+    "nock": "^9.0.14",
+    "rimraf": "^2.6.2"
   },
   "jest": {
     "transformIgnorePatterns": [
       "/node_modules/",
-      "/__fixtures__/"
+      "/__fixtures__/",
+      "/__tmp__/"
     ],
     "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "/testPage_files/"
+      "/node_modules/"
     ],
     "testPathIgnorePatterns": [
-      "/__fixtures__/"
+      "/__fixtures__/",
+      "/__tmp__/"
     ]
   }
 }
