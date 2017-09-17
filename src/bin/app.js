@@ -8,7 +8,10 @@ program
   .description(packageData.description)
   .option('-o, --output <path>', 'input directory for saving')
   .arguments('<url>')
-  .action(url => run(url, program.output))
+  .action((url) => {
+    console.log(`Downloading ${url}...\n`);
+    return run(url, program.output);
+  })
   .parse(process.argv);
 
 if (!program.args.length) {
