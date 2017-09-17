@@ -1,7 +1,7 @@
 import nock from 'nock';
 import fs from 'mz/fs';
 import path from 'path';
-import rmrf from 'rimraf';
+// import rmrf from 'rimraf';
 import webpageLoader from '../';
 
 const localhost = 'http://localhost';
