@@ -33,9 +33,11 @@ describe('test', () => {
   });
 
   // clean up
+  /*
   afterAll(() => {
     rmrf(tmpDir, () => {});
   });
+  */
 
   test('html', async () => {
     await webpageLoader(localhost, tmpdir);
