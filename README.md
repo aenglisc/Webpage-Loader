@@ -22,14 +22,14 @@ Usage: webpage-loader-by-roman [options] \<url\>
   </tr>
   <tr>
     <td>-o folder-name</td>
-    <td>creates folder-name, relative</td>
+    <td>creates /folder-name, relative</td>
   </tr>
   <tr>
     <td>-o /folder-name</td>
-    <td>creates folder-name, absolute</td>
+    <td>creates /folder-name, absolute</td>
   </tr>
   <tr>
     <td>-o path/to/folder-name</td>
-    <td>recursively creates path/to/folder-name, relative</td>
+    <td>recursively creates /path/to/folder-name, relative</td>
   </tr>
 </table>
