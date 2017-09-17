@@ -59,7 +59,7 @@ describe('success', () => {
 
     const dlicon = await fs.readFile(`${tmpdirSrc}/icon.ico`, 'utf8');
     const dlimg = await fs.readFile(`${tmpdirSrc}/home.png`, 'utf8');
-    const dlscript = await fs.readFile(`${tmpdirSrc}/script.js`, 'utf8');
+    const dlscript = await fs.readFile(`${tmpdirSrc}/script`, 'utf8');
 
     expect.assertions(3);
     await expect(dlicon).toBe(icon);
