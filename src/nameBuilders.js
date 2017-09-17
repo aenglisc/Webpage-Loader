@@ -5,7 +5,7 @@ const transform = str => (str[0] === '/' ? str.slice(1) : str).replace(/\W+/g, '
 
 const urlToName = (address) => {
   const { host, pathname } = url.parse(address);
-  return transform(`${!host ? '' : host}${pathname === '/' ? '' : pathname}`);
+  return transform(url.format(pathname === '/' ? { host } : { host, pathname }));
 };
 
 export const genPageName = address => `${urlToName(address)}.html`;
