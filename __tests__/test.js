@@ -1,47 +1,66 @@
 import nock from 'nock';
 import fs from 'mz/fs';
-import os from 'os';
 import path from 'path';
+import rmrf from 'rimraf';
 import webpageLoader from '../';
 
 const localhost = 'http://localhost';
 const fixturesDir = './__tests__/__fixtures__/';
-// const gentmpdir = () => os.tmpdir();
+const tmpDir = './__tests__/__tmp__/';
+fs.mkdirSync(tmpDir);
 
-test('download test page', () => {
-  const tmpdir = os.tmpdir();
+const newhtml = fs.readFileSync(`${fixturesDir}result/test.1.html`, 'utf8');
+const html = fs.readFileSync(`${fixturesDir}base/test.html`, 'utf8');
+const icon = fs.readFileSync(`${fixturesDir}base/icon.ico`, 'utf8');
+const img = fs.readFileSync(`${fixturesDir}base/home.png`, 'utf8');
+const script = fs.readFileSync(`${fixturesDir}base/script.js`, 'utf8');
 
-  const html = fs.readFileSync(`${fixturesDir}base/test.html`, 'utf8');
-  const icon = fs.readFileSync(`${fixturesDir}base/icon.ico`);
-  const img = fs.readFileSync(`${fixturesDir}base/home.png`);
-  const script = fs.readFileSync(`${fixturesDir}base/script.js`);
+const gentmpdir = () => fs.mkdtempSync(tmpDir);
+let tmpdir = '';
 
-  const newhtml = fs.readFileSync(`${fixturesDir}result/test.1.html`, 'utf8');
+describe('test', () => {
+  beforeEach(() => {
+    tmpdir = gentmpdir();
+    nock(localhost)
+      .get('/')
+      .reply(200, html)
+      .get('/icon.ico')
+      .reply(200, icon)
+      .get('/home.png')
+      .reply(200, img)
+      .get('/script.js')
+      .reply(200, script);
+  });
 
-  nock(localhost)
-    .get('/')
-    .reply(200, html)
-    .get('/icon.ico')
-    .reply(200, icon)
-    .get('/home.png')
-    .reply(200, img)
-    .get('/script.js')
-    .reply(200, script);
+  // clean up
+  afterAll(() => {
+    rmrf(tmpDir, () => {});
+  });
 
-  const filepath = path.join(tmpdir, 'localhost.html');
-  const tmpdirSrc = path.join(tmpdir, 'localhost_files');
-  const iconFilepath = path.join(tmpdirSrc, 'icon.ico');
-  const imgFilepath = path.join(tmpdirSrc, 'home.png');
-  const scriptFilepath = path.join(tmpdirSrc, 'script.js');
+  test('html', async () => {
+    await webpageLoader(localhost, tmpdir);
+    const dlhtml = await fs.readFile(`${tmpdir}/localhost.html`, 'utf8');
+    expect(dlhtml).toBe(newhtml);
+  });
 
-  expect.assertions(4);
-  return webpageLoader(localhost, tmpdir)
-    .then(() => fs.readFile(filepath, 'utf8'))
-    .then(data => expect(data).toBe(newhtml, 'utf8'))
-    .then(() => fs.readFile(iconFilepath, 'utf8'))
-    .then(data => expect(data).toBe(icon.toString()))
-    .then(() => fs.readFile(imgFilepath, 'utf8'))
-    .then(data => expect(data).toBe(img.toString()))
-    .then(() => fs.readFile(scriptFilepath, 'utf8'))
-    .then(data => expect(data).toBe(script.toString()));
+  test('icon', async () => {
+    const tmpdirSrc = path.join(tmpdir, 'localhost_files');
+    await webpageLoader(localhost, tmpdir);
+    const dlicon = await fs.readFile(`${tmpdirSrc}/icon.ico`, 'utf8');
+    expect(dlicon).toBe(icon);
+  });
+
+  test('img', async () => {
+    const tmpdirSrc = path.join(tmpdir, 'localhost_files');
+    await webpageLoader(localhost, tmpdir);
+    const dlimg = await fs.readFile(`${tmpdirSrc}/home.png`, 'utf8');
+    expect(dlimg).toBe(img);
+  });
+
+  test('script', async () => {
+    const tmpdirSrc = path.join(tmpdir, 'localhost_files');
+    await webpageLoader(localhost, tmpdir);
+    const dlscript = await fs.readFile(`${tmpdirSrc}/script.js`, 'utf8');
+    expect(dlscript).toBe(script);
+  });
 });
