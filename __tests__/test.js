@@ -42,27 +42,27 @@ describe('test', () => {
   test('html', async () => {
     await webpageLoader(localhost, tmpdir);
     const dlhtml = await fs.readFile(`${tmpdir}/localhost.html`, 'utf8');
-    expect(dlhtml).toBe(newhtml);
+    await expect(dlhtml).toBe(newhtml);
   });
 
   test('icon', async () => {
     const tmpdirSrc = path.join(tmpdir, 'localhost_files');
     await webpageLoader(localhost, tmpdir);
     const dlicon = await fs.readFile(`${tmpdirSrc}/icon.ico`, 'utf8');
-    expect(dlicon).toBe(icon);
+    await expect(dlicon).toBe(icon);
   });
 
   test('img', async () => {
     const tmpdirSrc = path.join(tmpdir, 'localhost_files');
     await webpageLoader(localhost, tmpdir);
     const dlimg = await fs.readFile(`${tmpdirSrc}/home.png`, 'utf8');
-    expect(dlimg).toBe(img);
+    await expect(dlimg).toBe(img);
   });
 
   test('script', async () => {
     const tmpdirSrc = path.join(tmpdir, 'localhost_files');
     await webpageLoader(localhost, tmpdir);
     const dlscript = await fs.readFile(`${tmpdirSrc}/script.js`, 'utf8');
-    expect(dlscript).toBe(script);
+    await expect(dlscript).toBe(script);
   });
 });
