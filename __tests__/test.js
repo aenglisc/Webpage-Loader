@@ -81,7 +81,7 @@ describe('errors', () => {
   });
 
   test('download to root', async () => {
-    const error = '\nUnable to download to  \'/\'. EACCES: permission denied, mkdir \'/localhost-root_files\'';
+    const error = '\nUnable to download to \'/\'. EACCES: permission denied, mkdir \'/localhost-root_files\'';
     nock(localhost)
       .get('/root')
       .reply(200, html);
