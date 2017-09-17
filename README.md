@@ -14,22 +14,22 @@ Usage: webpage-loader-by-roman [options] \<url\>
 <table style="width:100%">
   <tr>
     <th>Option</th>
-    <th>Format</th>
+    <th>Download location</th>
   </tr>
   <tr>
     <td>no options</td>
-    <td>saves to ./tmp</td>
+    <td>creates /tmp in your current directory</td>
   </tr>
   <tr>
     <td>-o folder-name</td>
-    <td>creates folder-name in your current directory</td>
+    <td>creates /folder-name, relative</td>
   </tr>
   <tr>
     <td>-o /folder-name</td>
-    <td>creates folder-name in the root directory</td>
+    <td>creates /folder-name, absolute</td>
   </tr>
   <tr>
     <td>-o path/to/folder-name</td>
-    <td>recursively creates path/to/folder-name in your current directory</td>
+    <td>recursively creates path/to/folder-name, relative</td>
   </tr>
 </table>
