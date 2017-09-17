@@ -25,13 +25,13 @@ const getData = (html, address) => {
 
         debug(`changing ${srcLink} to ${newSrcLink}`);
         $(currentSrc).attr(srcAtts[tag], newSrcLink);
-        return [...srcAcc, srcLink];
+        return srcAcc.find(item => item === srcLink) ? srcAcc : [...srcAcc, srcLink];
       }
       return srcAcc;
     }, []);
 
     return [...acc, ...srcLinks];
-  }, {});
+  }, []);
 
   debug(`found ${links.length} files`);
   return { html: $.html(), links };
