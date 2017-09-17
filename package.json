@@ -1,6 +1,6 @@
 {
   "name": "webpage-loader-by-roman",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "An asynchronous page downloading utlity",
   "main": "dist/index.js",
   "bin": {
@@ -43,6 +43,7 @@
     "cheerio": "^1.0.0-rc.2",
     "commander": "^2.11.0",
     "debug": "^3.0.1",
+    "listr": "^0.12.0",
     "mkdirp": "^0.5.1",
     "mz": "^2.6.0",
     "nock": "^9.0.14",

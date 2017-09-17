@@ -1,6 +1,7 @@
 import fs from 'mz/fs';
 import url from 'url';
 import path from 'path';
+import Listr from 'listr';
 import mkdirp from './lib/mkdirp';
 import axios from './lib/axios';
 import debug from './lib/debug';
@@ -8,14 +9,13 @@ import { genPageName, genSrcDirName, genSrcName } from './nameBuilders';
 
 const downloadResources = (links, address, srcDir) => Promise.all(links.map((link) => {
   debug(`downloading ${url.resolve(address, link)}`);
-  return axios
-    .get(url.resolve(address, link), { responseType: 'arraybuffer' })
-    .then(({ data }) => fs.writeFile(path.resolve(srcDir, genSrcName(link)), data))
-    .catch((e) => {
-      const errmsg = `Unable to download resource at ${url.resolve(address, link)}\n >${e.message}`;
-      console.error(errmsg);
-      debug(errmsg);
-    });
+  return new Listr([{
+    title: url.resolve(address, link),
+    task: () => axios
+      .get(url.resolve(address, link), { responseType: 'arraybuffer' })
+      .then(({ data }) => fs.writeFile(path.resolve(srcDir, genSrcName(link)), data)),
+  }]).run()
+    .catch(e => debug(`Could not get resource at ${url.resolve(address, link)}\n >${e.message}`));
 }));
 
 export default (html, links, address, destination) => {
