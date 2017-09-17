@@ -12,7 +12,7 @@ const downloadResources = (links, address, srcDir) => Promise.all(links.map((lin
     .get(url.resolve(address, link), { responseType: 'arraybuffer' })
     .then(({ data }) => fs.writeFile(path.resolve(srcDir, genSrcName(link)), data))
     .catch((e) => {
-      const errmsg = `${url.resolve(address, link)} has encountered a problem: ${e.message}`;
+      const errmsg = `Unable to download resource at ${url.resolve(address, link)}\n >${e.message}`;
       console.error(errmsg);
       debug(errmsg);
     });
@@ -27,7 +27,7 @@ export default (html, links, address, destination) => {
 
   return mkdirp(srcDir)
     .catch((e) => {
-      const errmsg = `Unable to download to '${path.resolve(destination)}'. ${e.message}`;
+      const errmsg = `\nUnable to download to '${path.resolve(destination)}'. ${e.message}`;
       console.error(errmsg);
       debug(errmsg);
       throw new Error(errmsg);
