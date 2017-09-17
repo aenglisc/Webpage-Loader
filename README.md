@@ -5,7 +5,7 @@
 [![Test Coverage](https://codeclimate.com/github/aenglisc/project-lvl3-s118/badges/coverage.svg)](https://codeclimate.com/github/aenglisc/project-lvl3-s118/coverage)
 [![Build Status](https://travis-ci.org/aenglisc/project-lvl3-s118.svg?branch=master)](https://travis-ci.org/aenglisc/project-lvl3-s118)
 
-An asynchronous page downloading utlity
+An asynchronous webpage downloading utlity
 
 Installation: npm i -g webpage-loader-by-roman
 
