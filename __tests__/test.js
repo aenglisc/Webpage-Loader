@@ -7,7 +7,6 @@ import webpageLoader from '../';
 
 const localhost = 'http://localhost';
 const fixturesDir = path.resolve('./__tests__/__fixtures__/');
-// const tempDirBase = path.resolve('./__tests__/');
 const tempDirBase = os.tmpdir();
 
 const newhtmlloc = path.resolve(fixturesDir, 'result/test.1.html');
@@ -22,7 +21,7 @@ const icon = fs.readFileSync(iconloc, 'utf8');
 const imgloc = path.resolve(fixturesDir, 'base/home.png');
 const img = fs.readFileSync(imgloc, 'utf8');
 
-const scriptloc = path.resolve(fixturesDir, 'base/script.js');
+const scriptloc = path.resolve(fixturesDir, 'base/script');
 const script = fs.readFileSync(scriptloc, 'utf8');
 
 let tmpdir = '';
@@ -37,7 +36,7 @@ describe('success', () => {
       .reply(200, icon)
       .get('/home.png')
       .reply(200, img)
-      .get('/script.js')
+      .get('/script')
       .reply(200, script)
       .get('/404.js')
       .reply(404);
