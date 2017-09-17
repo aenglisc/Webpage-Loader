@@ -1,4 +1,5 @@
 import nock from 'nock';
+// import os from 'os';
 import fs from 'mz/fs';
 import path from 'path';
 import rmrf from 'rimraf';
@@ -6,7 +7,7 @@ import webpageLoader from '../';
 
 const localhost = 'http://localhost';
 const fixturesDir = path.resolve('./__tests__/__fixtures__/');
-const tmpDir = path.resolve('./__tests__/__tmp__/');
+const testsDir = path.resolve('./__tests__/');
 
 const newhtmlloc = path.resolve(fixturesDir, 'result/test.1.html');
 const newhtml = fs.readFileSync(newhtmlloc, 'utf8');
@@ -25,10 +26,9 @@ const script = fs.readFileSync(scriptloc, 'utf8');
 
 let tmpdir = '';
 
-describe('test', () => {
+describe('success', () => {
   beforeAll(async () => {
-    fs.mkdirSync(tmpDir);
-    tmpdir = fs.mkdtempSync(`${tmpDir}/`);
+    tmpdir = fs.mkdtempSync(`${testsDir}/`);
     nock(localhost)
       .get('/')
       .reply(200, html)
@@ -37,14 +37,15 @@ describe('test', () => {
       .get('/home.png')
       .reply(200, img)
       .get('/script.js')
-      .reply(200, script);
+      .reply(200, script)
+      .get('/404.js')
+      .reply(404);
     await webpageLoader(localhost, tmpdir);
   });
 
   // clean up
-
   afterAll(() => {
-    rmrf(tmpDir, () => {});
+    rmrf(tmpdir, () => {});
   });
 
   test('html', async () => {
@@ -64,5 +65,27 @@ describe('test', () => {
     await expect(dlicon).toBe(icon);
     await expect(dlimg).toBe(img);
     await expect(dlscript).toBe(script);
+  });
+});
+
+describe('errors', () => {
+  test('404', async () => {
+    const error = 'Unable to download http://localhost/404. Request failed with status code 404';
+    nock(localhost)
+      .get('/404')
+      .reply(404);
+
+    const result = await webpageLoader(`${localhost}/404`, testsDir);
+    await expect(result.message).toMatch(error);
+  });
+
+  test('download to root', async () => {
+    const error = 'Unable to download to \'/\'. EACCES: permission denied, mkdir \'/localhost-root_files\'';
+    nock(localhost)
+      .get('/root')
+      .reply(200, html);
+
+    const result = await webpageLoader(`${localhost}/root`, '/');
+    await expect(result.message).toMatch(error);
   });
 });

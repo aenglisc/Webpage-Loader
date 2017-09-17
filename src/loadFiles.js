@@ -6,13 +6,17 @@ import axios from './lib/axios';
 import debug from './lib/debug';
 import { genPageName, genSrcDirName, genSrcName } from './nameBuilders';
 
-const downloadResources = (links, address, srcDir) => links.forEach((link) => {
+const downloadResources = (links, address, srcDir) => Promise.all(links.map((link) => {
   debug(`downloading ${url.resolve(address, link)}`);
-  axios
+  return axios
     .get(url.resolve(address, link), { responseType: 'arraybuffer' })
     .then(({ data }) => fs.writeFile(path.resolve(srcDir, genSrcName(link)), data))
-    .catch(e => debug(`${url.resolve(address, link)} has encountered a problem\n${e}`));
-});
+    .catch((e) => {
+      const errmsg = `${url.resolve(address, link)} has encountered a problem: ${e.message}`;
+      console.error(errmsg);
+      debug(errmsg);
+    });
+}));
 
 export default (html, links, address, destination) => {
   const pageName = genPageName(address);
@@ -22,6 +26,12 @@ export default (html, links, address, destination) => {
   const srcDir = path.resolve(destination, srcDirName);
 
   return mkdirp(srcDir)
+    .catch((e) => {
+      const errmsg = `Unable to download to '${path.resolve(destination)}'. ${e.message}`;
+      console.error(errmsg);
+      debug(errmsg);
+      throw new Error(errmsg);
+    })
     .then(() => {
       debug(`creating ${pageName}`);
       return fs.writeFile(pageLoc, html, 'utf8');
