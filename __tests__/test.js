@@ -1,5 +1,5 @@
 import nock from 'nock';
-// import os from 'os';
+import os from 'os';
 import fs from 'mz/fs';
 import path from 'path';
 import rmrf from 'rimraf';
@@ -7,7 +7,8 @@ import webpageLoader from '../';
 
 const localhost = 'http://localhost';
 const fixturesDir = path.resolve('./__tests__/__fixtures__/');
-const testsDir = path.resolve('./__tests__/');
+// const tempDirBase = path.resolve('./__tests__/');
+const tempDirBase = os.tmpdir();
 
 const newhtmlloc = path.resolve(fixturesDir, 'result/test.1.html');
 const newhtml = fs.readFileSync(newhtmlloc, 'utf8');
@@ -28,7 +29,7 @@ let tmpdir = '';
 
 describe('success', () => {
   beforeAll(async () => {
-    tmpdir = fs.mkdtempSync(`${testsDir}/`);
+    tmpdir = fs.mkdtempSync(`${tempDirBase}/`);
     nock(localhost)
       .get('/')
       .reply(200, html)
@@ -75,7 +76,7 @@ describe('errors', () => {
       .get('/404')
       .reply(404);
 
-    const result = await webpageLoader(`${localhost}/404`, testsDir);
+    const result = await webpageLoader(`${localhost}/404`, tempDirBase);
     await expect(result.message).toMatch(error);
   });
 
