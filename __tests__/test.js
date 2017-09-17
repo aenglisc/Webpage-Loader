@@ -53,21 +53,16 @@ describe('test', () => {
     await expect(dlhtml).toBe(newhtml);
   });
 
-  test('icon', async () => {
+  test('resources', async () => {
     const tmpdirSrc = path.join(tmpdir, 'localhost_files');
+
     const dlicon = await fs.readFile(`${tmpdirSrc}/icon.ico`, 'utf8');
-    await expect(dlicon).toBe(icon);
-  });
-
-  test('img', async () => {
-    const tmpdirSrc = path.join(tmpdir, 'localhost_files');
     const dlimg = await fs.readFile(`${tmpdirSrc}/home.png`, 'utf8');
-    await expect(dlimg).toBe(img);
-  });
-
-  test('script', async () => {
-    const tmpdirSrc = path.join(tmpdir, 'localhost_files');
     const dlscript = await fs.readFile(`${tmpdirSrc}/script.js`, 'utf8');
+
+    expect.assertions(3);
+    await expect(dlicon).toBe(icon);
+    await expect(dlimg).toBe(img);
     await expect(dlscript).toBe(script);
   });
 });
