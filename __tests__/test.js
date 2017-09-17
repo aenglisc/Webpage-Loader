@@ -71,7 +71,7 @@ describe('success', () => {
 
 describe('errors', () => {
   test('404', async () => {
-    const error = 'Unable to download http://localhost/404. Request failed with status code 404';
+    const error = '\nUnable to download http://localhost/404. Request failed with status code 404';
     nock(localhost)
       .get('/404')
       .reply(404);
@@ -81,7 +81,7 @@ describe('errors', () => {
   });
 
   test('download to root', async () => {
-    const error = 'Unable to download to \'/\'. EACCES: permission denied, mkdir \'/localhost-root_files\'';
+    const error = '\nUnable to download to  \'/\'. EACCES: permission denied, mkdir \'/localhost-root_files\'';
     nock(localhost)
       .get('/root')
       .reply(200, html);
