@@ -27,7 +27,7 @@ export default (html, links, address, destination) => {
 
   return mkdirp(srcDir)
     .catch((e) => {
-      const errmsg = `Unable to download to '${path.resolve(destination)}'. ${e.message}`;
+      const errmsg = `Unable to download to '${path.resolve(destination)}'\n >${e.message}`;
       debug(errmsg);
       throw new Error(errmsg);
     })

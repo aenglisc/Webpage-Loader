@@ -5,7 +5,7 @@ import loadFiles from './loadFiles';
 
 export default (address, destination = './tmp') => axios.get(address)
   .catch((e) => {
-    const errmsg = `Unable to download ${address}. ${e.message}`;
+    const errmsg = `Unable to download ${address}\n >${e.message}`;
     debug(errmsg);
     throw new Error(errmsg);
   })
