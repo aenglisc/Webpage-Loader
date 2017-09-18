@@ -16,7 +16,8 @@ program
     return run(url, program.output, listr)
       .then(() => console.log(`\n${url} has been downloaded to ${dir}`))
       .catch((e) => {
-        console.error(e.message);
+        const errmsg = `Unable to download ${url} to ${dir}\n >${e.message}`;
+        console.error(errmsg);
         process.exit(1);
       });
   })
