@@ -8,10 +8,8 @@ export default (address, destination = './tmp') => axios.get(address)
   .catch((e) => {
     const errmsg = `\nUnable to download ${address}. ${e.message}`;
     debug(errmsg);
-    console.error(errmsg);
     throw new Error(errmsg);
   })
   .then(({ data }) => loadData(data, address))
   .then(({ html, links }) => loadFiles(html, links, address, destination))
-  .then(() => console.log(`\n${address} has been downloaded to ${path.resolve(destination)}`))
-  .catch(e => new Error(e.message));
+  .then(() => console.log(`\n${address} has been downloaded to ${path.resolve(destination)}`));
