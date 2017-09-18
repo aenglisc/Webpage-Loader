@@ -1,6 +1,6 @@
 {
   "name": "webpage-loader-by-roman",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "An asynchronous page downloading utlity",
   "main": "dist/index.js",
   "bin": {
