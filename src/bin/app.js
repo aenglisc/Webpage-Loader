@@ -14,7 +14,10 @@ program
     console.log(`Downloading ${url} to ${dir}...\n`);
     return run(url, program.output)
       .then(() => console.log(`\n${url} has been downloaded to ${dir}`))
-      .catch(e => console.error(e.message));
+      .catch((e) => {
+        console.error(e.message);
+        process.exit(1);
+      });
   })
   .parse(process.argv);
 
