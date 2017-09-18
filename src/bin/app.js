@@ -10,9 +10,10 @@ program
   .option('-o, --output <path>', 'input directory for saving')
   .arguments('<url>')
   .action((url) => {
+    const listr = true;
     const dir = path.resolve(program.output || './tmp');
     console.log(`Downloading ${url} to ${dir}...\n`);
-    return run(url, program.output)
+    return run(url, program.output, listr)
       .then(() => console.log(`\n${url} has been downloaded to ${dir}`))
       .catch((e) => {
         console.error(e.message);

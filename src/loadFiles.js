@@ -7,18 +7,28 @@ import axios from './lib/axios';
 import debug from './lib/debug';
 import { genPageName, genSrcDirName, genSrcName } from './nameBuilders';
 
-const downloadResources = (links, address, srcDir) => Promise.all(links.map((link) => {
+const downloadResources = (links, address, srcDir, listr) => Promise.all(links.map((link) => {
   debug(`downloading ${url.resolve(address, link)}`);
-  return new Listr([{
-    title: url.resolve(address, link),
-    task: () => axios
-      .get(url.resolve(address, link), { responseType: 'arraybuffer' })
-      .then(({ data }) => fs.writeFile(path.resolve(srcDir, genSrcName(link)), data)),
-  }]).run()
-    .catch(e => debug(`Could not get resource at ${url.resolve(address, link)}\n >${e.message}`));
+
+  const sourceurl = url.resolve(address, link);
+  const filename = genSrcName(link);
+  const dlresource = () => axios
+    .get(sourceurl, { responseType: 'arraybuffer' })
+    .then(({ data }) => fs.writeFile(path.resolve(srcDir, filename), data));
+
+  const success = `Successfully dowloaded resource\nat ${sourceurl}\nas ${filename}\nto ${srcDir}`;
+  const error = `Could not get resource at ${sourceurl}\n >`;
+
+  return listr
+    ? new Listr([{ title: sourceurl, task: dlresource }]).run()
+      .then(() => debug(success))
+      .catch(e => debug(`${error}${e.message}`))
+    : dlresource()
+      .then(() => success)
+      .catch(e => `${error}${e.message}`);
 }));
 
-export default (html, links, address, destination) => {
+export default (html, links, address, destination, listr) => {
   const pageName = genPageName(address);
   const srcDirName = genSrcDirName(address);
 
@@ -26,14 +36,9 @@ export default (html, links, address, destination) => {
   const srcDir = path.resolve(destination, srcDirName);
 
   return mkdirp(srcDir)
-    .catch((e) => {
-      const errmsg = `Unable to download to '${path.resolve(destination)}'\n >${e.message}`;
-      debug(errmsg);
-      throw new Error(errmsg);
-    })
     .then(() => {
       debug(`creating ${pageName}`);
       return fs.writeFile(pageLoc, html, 'utf8');
     })
-    .then(() => downloadResources(links, address, srcDir));
+    .then(() => downloadResources(links, address, srcDir, listr));
 };

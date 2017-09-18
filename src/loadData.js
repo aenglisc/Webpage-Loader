@@ -23,7 +23,7 @@ const getData = (html, address) => {
         const newResourceName = genSrcName(srcLink);
         const newSrcLink = path.join(srcDirName, newResourceName);
 
-        debug(`changing ${srcLink} to ${newSrcLink}`);
+        debug(`\nchanging ${tag} source\nold: ${srcLink}\nnew: ${newSrcLink}\n`);
         $(currentSrc).attr(srcAtts[tag], newSrcLink);
         return srcAcc.find(item => item === srcLink) ? srcAcc : [...srcAcc, srcLink];
       }
