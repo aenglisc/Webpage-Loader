@@ -1,5 +1,6 @@
 #!/usr/local/bin/node
 import program from 'commander';
+import path from 'path';
 import packageData from '../../package.json';
 import run from '..';
 
@@ -9,8 +10,10 @@ program
   .option('-o, --output <path>', 'input directory for saving')
   .arguments('<url>')
   .action((url) => {
-    console.log(`Downloading ${url}...\n`);
+    const dir = path.resolve(program.output || './tmp');
+    console.log(`Downloading ${url} to ${dir}...\n`);
     return run(url, program.output)
+      .then(() => console.log(`\n${url} has been downloaded to ${dir}`))
       .catch(e => console.error(e.message));
   })
   .parse(process.argv);
