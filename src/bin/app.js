@@ -10,7 +10,8 @@ program
   .arguments('<url>')
   .action((url) => {
     console.log(`Downloading ${url}...\n`);
-    return run(url, program.output);
+    return run(url, program.output)
+      .catch(e => console.error(e.message));
   })
   .parse(process.argv);
 
