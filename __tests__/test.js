@@ -75,8 +75,11 @@ describe('errors', () => {
       .get('/404')
       .reply(404);
 
-    const result = await webpageLoader(`${localhost}/404`, tempDirBase);
-    await expect(result.message).toMatch(error);
+    try {
+      await webpageLoader(`${localhost}/404`, tempDirBase);
+    } catch (e) {
+      expect(e.message).toMatch(error);
+    }
   });
 
   test('download to root', async () => {
@@ -85,7 +88,10 @@ describe('errors', () => {
       .get('/root')
       .reply(200, html);
 
-    const result = await webpageLoader(`${localhost}/root`, '/');
-    await expect(result.message).toMatch(error);
+    try {
+      await webpageLoader(`${localhost}/root`, '/');
+    } catch (e) {
+      expect(e.message).toMatch(error);
+    }
   });
 });
