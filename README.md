@@ -2,7 +2,7 @@
 
 [![Code Climate](https://codeclimate.com/github/aenglisc/project-lvl3-s118/badges/gpa.svg)](https://codeclimate.com/github/aenglisc/Webpage-Loader)
 [![Issue Count](https://codeclimate.com/github/aenglisc/project-lvl3-s118/badges/issue_count.svg)](https://codeclimate.com/github/aenglisc/Webpage-Loader)
-[![Test Coverage](https://codeclimate.com/github/aenglisc/project-lvl3-s118/badges/coverage.svg)](https://codeclimate.com/github/aenglisc/Webpage-Loader/coverage)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/b00159e51762693b471e/test_coverage)](https://codeclimate.com/github/aenglisc/Webpage-Loader/test_coverage)
 [![Build Status](https://travis-ci.org/aenglisc/Webpage-Loader.svg?branch=master)](https://travis-ci.org/aenglisc/Webpage-Loader)
 
 An asynchronous webpage downloading utlity
