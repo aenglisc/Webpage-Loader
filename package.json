@@ -47,7 +47,8 @@
     "mkdirp": "^0.5.1",
     "mz": "^2.6.0",
     "nock": "^9.0.14",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "hoek": "5.0.3"
   },
   "jest": {
     "transformIgnorePatterns": [
